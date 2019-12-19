@@ -48,11 +48,20 @@ public class CustomController {
         double shenxin = NumberUtils.toDouble(StringUtils.trimToEmpty(request.getParameter("shenxin")));
 		
         StudentGrade studentgrade = new StudentGrade();
-        
-        studentgrade.setId(id);
-        studentgrade.setSixiang(sixiang);
-        studentgrade.setKeji(keji);
-        studentgrade.setShenxin(shenxin);
+        if(studentservice.queryGrade(id).getKeji()!=0) {
+        	double sixiang1 = (studentservice.queryGrade(id).getSixiang()+sixiang)/2;
+        	double keji1 = (studentservice.queryGrade(id).getKeji()+keji)/2;
+        	double shenxin1 = (studentservice.queryGrade(id).getShenxin()+shenxin)/2;
+        	studentgrade.setId(id);
+            studentgrade.setSixiang(sixiang1);
+            studentgrade.setKeji(keji1);
+            studentgrade.setShenxin(shenxin1);
+        }else {
+            studentgrade.setId(id);
+            studentgrade.setSixiang(sixiang);
+            studentgrade.setKeji(keji);
+            studentgrade.setShenxin(shenxin);
+        }
         System.out.println("init success!");
         if(studentservice.updateGrade(studentgrade)==1) {
         	 return "success";

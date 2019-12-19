@@ -12,4 +12,6 @@ public interface StudentService {
 	public List<Student> selectAllStudent();
 	
 	public int updateGrade(StudentGrade sg);
+	
+	public StudentGrade queryGrade(Integer id);
 }

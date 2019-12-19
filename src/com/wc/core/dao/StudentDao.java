@@ -16,5 +16,7 @@ public interface StudentDao {
 	public List<Student> selectALLStudent(); 
 	
 	public int updateGrade(StudentGrade sg);
+	
+	public StudentGrade queryGrade(Integer id);
 
 }

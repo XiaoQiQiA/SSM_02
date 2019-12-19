@@ -33,5 +33,10 @@ public class StduentServiceImpl implements StudentService{
 		// TODO Auto-generated method stub
 		return studentdao.updateGrade(sg);
 	}
+	@Override
+	public StudentGrade queryGrade(Integer id) {
+		// TODO Auto-generated method stub
+		return studentdao.queryGrade(id);
+	}
 
 }

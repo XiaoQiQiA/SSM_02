@@ -78,7 +78,7 @@
 	</div>
 	<!-- 左侧显示列表部分 end--> 
   </nav>
-    <!-- 客户列表查询部分  start-->
+    <!-- 学生列表查询部分  start-->
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
@@ -94,7 +94,6 @@
 					<table class="table table-bordered table-striped">
 						<thead>
 							<tr>
-								<th>学号</th>
 								<th>姓名</th>
 								<th>思想道德</th>
 								<th>科技人文</th>
@@ -105,14 +104,34 @@
 						<tbody>
 							<c:forEach items="${list}" var="student">
 								<tr>
-									<td>${student.id}</td>
+									<td><input value="${student.id}" name="id" type="hidden"></td>
 									<td>${student.name}</td>
-									<td><input type="text" name="sixiang" ></td>
-									<td><input type="text" name="keji"></td>
-									<td><input type="text" name="shenxin"></td>
+									<td>
+									    <input type="text" name="sixiang" list="listitem" placeholder="请选择分数">
+									    <datalist id="listitem">
+									        <option>75</option>
+									        <option>85</option>
+									        <option>95</option>
+									    </datalist>
+									</td>
+									<td>
+									    <input type="text" name="keji" list="listitem" placeholder="请选择分数">
+									    <datalist id="listitem">
+									        <option>75</option>
+									        <option>85</option>
+									        <option>95</option>
+									    </datalist>
+									</td>
+									<td>
+									    <input type="text" name="shenxin" list="listitem" placeholder="请选择分数"></td>
+									    <datalist id="listitem">
+									        <option>75</option>
+									        <option>85</option>
+									        <option>95</option>
+									    </datalist>
 									<td>
 										<!-- <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#customerEditDialog" onclick= "editCustomer(${row.cust_id})">修改</a> -->
-										<button  class="btn btn-danger btn-xs" click="update(${student.id})">确认</button>
+										<button  class="btn btn-danger btn-xs">确认</button>
 									</td>
 								</tr>
 							</c:forEach>
@@ -144,12 +163,23 @@
 
 $("button").click(function(){
 	var tr = $(this).parents("tr");
+	var id = $(tr).find("input[name='id']").val();
+	console.log("id"+id);
 	var sixiang = $(tr).find("input[name='sixiang']").val();
-	console.log("思想"+sixiang);
+	if(sixiang.length==0){
+		alert("打分不得为空！");
+		return;
+	}
 	var keji = $(tr).find("input[name='keji']").val();
-	console.log(keji);
+	if(keji.length==0){
+		alert("打分不得为空！");
+		return;
+	}
 	var shenxin = $(tr).find("input[name='shenxin']").val();
-	console.log(shenxin);
+	if(keji.length==0){
+		alert("打分不得为空！");
+		return;
+	}
 	if(confirm('确认之后不可更改?')) {
 	var num = "^[1-9]\d*$";
 	//if(num.match(sixiang)||num.match(keji)||num.match(shenxin)){
@@ -159,7 +189,7 @@ $("button").click(function(){
     $.ajax({
         url: "<%=basePath%>customer/updateGrade.action",    // 提交到controller的url路径
         type: "post",    // 提交方式
-        data: {"sixiang": sixiang, "keji": keji,"shenxin": shenxin},  // data为String类型，必须为 Key/Value 格式。
+        data: {"id": id,"sixiang": sixiang, "keji": keji,"shenxin": shenxin},  // data为String类型，必须为 Key/Value 格式。
         dataType: "json",    // 服务器端返回的数据类型
         success: function (data) {    // 请求成功后的回调函数，其中的参数data为controller返回的map,也就是说,@ResponseBody将返回的map转化为JSON格式的数据，然后通过data这个参数取JSON数据中的值
             if (data.message == "success") {    
@@ -175,25 +205,6 @@ $("button").click(function(){
 });
 
 
-
-
-
-function update(id){
-    console.log(id);
-    $.ajax({
-        url: "<%=basePath%>customer/updateGrade.action",    // 提交到controller的url路径
-        type: "post",    // 提交方式
-        data: {"id": id},  // data为String类型，必须为 Key/Value 格式。
-        dataType: "json",    // 服务器端返回的数据类型
-        success: function (data) {    // 请求成功后的回调函数，其中的参数data为controller返回的map,也就是说,@ResponseBody将返回的map转化为JSON格式的数据，然后通过data这个参数取JSON数据中的值
-            if (data.message == "success") {    
-            	alert("对该用户的打分成功！");
-            } else {
-            	alert("对该用户的打分失败！");
-            }
-        }
-    });
-	 }
 
 	
 </script>

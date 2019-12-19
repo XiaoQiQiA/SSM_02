@@ -19,6 +19,7 @@
         from student
     </select>
     
+    <!-- 打分 -->
     <update id="updateGrade" parameterType="student">
         update grade
          <set>
@@ -34,5 +35,11 @@
          </set>
          where id = #{id}
     </update>
+    
+    <select id="queryGrade" parameterType="Integer" resultType="studentgrade">
+       select id,sixiang,keji,shenxin
+       from grade
+       where id = #{id}
+    </select>
 </mapper>
   
